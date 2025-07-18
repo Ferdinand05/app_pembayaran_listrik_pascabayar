@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\TagihanResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\TagihanResource\RelationManagers;
+use Illuminate\Support\Carbon;
 
 class TagihanResource extends Resource
 {
@@ -39,7 +40,8 @@ class TagihanResource extends Resource
                     ->label('Nama')
                     ->searchable(),
                 TextColumn::make('bulan')
-                    ->sortable(),
+                    ->sortable()
+                    ->formatStateUsing(fn($state) => Carbon::create()->month($state)->monthName),
                 TextColumn::make('tahun')
                     ->sortable(),
                 TextColumn::make('jumlah_meter'),
@@ -69,7 +71,7 @@ class TagihanResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    // Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

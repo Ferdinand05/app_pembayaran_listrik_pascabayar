@@ -48,12 +48,11 @@ class PembayaranResource extends Resource
                 TextColumn::make('jumlah_meter'),
                 ImageColumn::make('bukti_bayar')
                     ->disk('public')
-                    ->width('100px')
-                    ->height('100px')
+                    ->width('170px')
+                    ->height('300px')
             ])
-            ->filters([
-                //
-            ])
+            ->recordUrl(null)
+            ->filters([])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])

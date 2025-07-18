@@ -2,8 +2,10 @@
 
 namespace App\Filament\Resources\TagihanResource\Pages;
 
+use App\Filament\Exports\TagihanExporter;
 use App\Filament\Resources\TagihanResource;
 use Filament\Actions;
+use Filament\Actions\ExportAction;
 use Filament\Resources\Pages\ListRecords;
 
 class ListTagihans extends ListRecords
@@ -14,6 +16,9 @@ class ListTagihans extends ListRecords
     {
         return [
             // Actions\CreateAction::make(),
+            ExportAction::make('export')
+                ->label('Cetak Laporan')
+                ->exporter(TagihanExporter::class)
         ];
     }
 }
