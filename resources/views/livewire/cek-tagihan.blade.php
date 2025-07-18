@@ -78,8 +78,14 @@
                                                     wire:click='openModalBayar({{ $item->id }})'>
                                                     Bayar
                                                 </button>
+                                            @elseif($item->status == 'lunas')
+                                                <div>
+                                                    <div class="badge text-bg-success">Lunas</div>
+                                                    <a href="{{ route('cetak.tagihan', $item->id) }}"
+                                                        class="btn btn-secondary btn-sm">Cetak</a>
+                                                </div>
                                             @else
-                                                <span class="badge text-bg-success">Lunas</span>
+                                                <div class="badge text-bg-secondary">Menunggu Validasi</div>
                                             @endif
                                         </div>
                                     </td>
@@ -148,6 +154,7 @@
                             </div>
                         </form>
                     </div>
+                    <small class=" text-primary">{{ $message ?? '' }}</small>
                 </div>
             </div>
         </template>

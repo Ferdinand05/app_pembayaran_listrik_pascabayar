@@ -14,6 +14,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\PembayaranResource\Pages;
 use App\Filament\Resources\PembayaranResource\RelationManagers;
+use App\Models\Tagihan;
+use Filament\Tables\Actions\Action;
 
 class PembayaranResource extends Resource
 {
@@ -46,15 +48,31 @@ class PembayaranResource extends Resource
                 TextColumn::make('metode_bayar')
                     ->label('Metode'),
                 TextColumn::make('jumlah_meter'),
+
                 ImageColumn::make('bukti_bayar')
                     ->disk('public')
-                    ->width('170px')
-                    ->height('300px')
+                    ->width('180px')
+                    ->height('320px'),
+                TextColumn::make('tagihan.status')
+                    ->label('Status')
+                    ->badge(),
             ])
             ->recordUrl(null)
             ->filters([])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Action::make('updateStatus')
+                    ->label('Lunas')
+                    ->action(function (Pembayaran $record) {
+                        $record->tagihan()->update([
+                            'status' => 'lunas'
+                        ]);
+                    })
+                    ->color('warning')
+                    ->visible(function (Pembayaran $record) {
+                        return $record->tagihan->status !== 'lunas';
+                    })
+                    ->icon('heroicon-o-check')
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

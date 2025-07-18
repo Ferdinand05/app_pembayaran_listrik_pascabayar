@@ -2,18 +2,20 @@
 
 namespace App\Filament\Resources;
 
+use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Tagihan;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Illuminate\Support\Carbon;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\TagihanResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\TagihanResource\RelationManagers;
-use Illuminate\Support\Carbon;
 
 class TagihanResource extends Resource
 {
@@ -64,7 +66,17 @@ class TagihanResource extends Resource
             ])
             ->recordUrl(null)
             ->filters([
-                //
+                SelectFilter::make('status')
+                    ->options([
+                        'belum dibayar' => 'belum dibayar',
+                        'lunas' => 'lunas'
+                    ]),
+            ])
+            ->headerActions([
+                FilamentExportHeaderAction::make('export')
+                    ->defaultFormat('pdf')
+                    ->disablePreview()
+                    ->label('Cetak Laporan')
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

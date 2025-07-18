@@ -61,6 +61,7 @@ class CekTagihan extends Component
 
 
     public $photo;
+    public $message;
     public function simpanPembayaran()
     {
         $this->validate([
@@ -73,7 +74,7 @@ class CekTagihan extends Component
 
         // Update status tagihan
         $this->selectedTagihan->update([
-            'status' => 'lunas'
+            'status' => 'menunggu validasi'
         ]);
 
         // Simpan data pembayaran
@@ -94,7 +95,7 @@ class CekTagihan extends Component
         $this->dispatch('update-pelanggan');
 
         // Beri feedback ke user
-        session()->flash('message', 'Pembayaran berhasil disimpan!');
+        $this->message = 'Tagihan berhasil di Submit. Menunggu validasi Admin';
     }
 
     #[On('update-pelanggan')]
