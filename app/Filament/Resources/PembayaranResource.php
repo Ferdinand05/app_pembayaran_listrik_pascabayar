@@ -60,7 +60,7 @@ class PembayaranResource extends Resource
             ->recordUrl(null)
             ->filters([])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
                 Action::make('updateStatus')
                     ->label('Lunas')
                     ->action(function (Pembayaran $record) {
@@ -78,7 +78,8 @@ class PembayaranResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->recordUrl(null);
     }
 
     public static function getRelations(): array
